@@ -18,12 +18,11 @@ function App() {
   };
 
   const onCompletePurchase = (tx) => {
-    // Simulate order completion after delay
-    setTransactions((prev) => [{ ...tx }, ...prev]);
+    const id = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    setTransactions((prev) => [{ ...tx, id }, ...prev]);
     setTimeout(() => {
-      setTransactions((prev) => prev.map((t) => t === tx ? { ...t, status: 'Completed' } : t));
+      setTransactions((prev) => prev.map((t) => (t.id === id ? { ...t, status: 'Completed' } : t)));
     }, 2000);
-    // Navigate to history after purchase
     const el = document.getElementById('history');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
